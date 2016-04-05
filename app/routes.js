@@ -1,4 +1,16 @@
+var express = require("express");
+var app = express();
+var mongojs = require('mongojs');
+var db = mongojs('contactlist', ['contactlist']);
+var bodyParser = require('body-parser');
+var router = express.Router();
+var engines = require('consolidate');
+var path = require('path');
+
 module.exports = function(app, passport) {
+
+    app.use(bodyParser.json());
+    app.use(express.static(__dirname + "/public"));
 
 // normal routes ===============================================================
 
@@ -18,6 +30,12 @@ module.exports = function(app, passport) {
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
+    });
+
+    app.get('/brackets', isLoggedIn, function(req, res) {
+        res.ender('brackets.ejs', {
+            user : req.user
+        });
     });
 
 // =============================================================================
@@ -51,43 +69,6 @@ module.exports = function(app, passport) {
             failureFlash : true // allow flash messages
         }));
 
-    // facebook -------------------------------
-
-        // send to facebook to do the authentication
-        app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-
-        // handle the callback after facebook has authenticated the user
-        app.get('/auth/facebook/callback',
-            passport.authenticate('facebook', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
-
-    // twitter --------------------------------
-
-        // send to twitter to do the authentication
-        app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
-
-        // handle the callback after twitter has authenticated the user
-        app.get('/auth/twitter/callback',
-            passport.authenticate('twitter', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
-
-
-    // google ---------------------------------
-
-        // send to google to do the authentication
-        app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-
-        // the callback after google has authenticated the user
-        app.get('/auth/google/callback',
-            passport.authenticate('google', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
-
 // =============================================================================
 // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
 // =============================================================================
@@ -96,100 +77,77 @@ module.exports = function(app, passport) {
         app.get('/connect/local', function(req, res) {
             res.render('connect-local.ejs', { message: req.flash('loginMessage') });
         });
+
         app.post('/connect/local', passport.authenticate('local-signup', {
             successRedirect : '/profile', // redirect to the secure profile section
             failureRedirect : '/connect/local', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
 
-    // facebook -------------------------------
+    //app.use('/', index);
 
-        // send to facebook to do the authentication
-        app.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
+        app.get("/users", function (req, res) {
+	        users.user.auth(function (err, docs) {
+		      console.log(docs);
+	   	    res.json(docs);
+		  });
+	   });
 
-        // handle the callback after facebook has authorized the user
-        app.get('/connect/facebook/callback',
-            passport.authorize('facebook', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
+        app.get("/contactlist", function (req, res) {
+	        console.log('recieved get request');
+	    
+	       db.contactlist.find(function (err, docs) {
+		      console.log(docs);
+		      res.json(docs);
+		  });
+	   });
 
-    // twitter --------------------------------
+        app.post("/contactlist", function (req, res) {
+	       console.log(req.body);
+	       db.contactlist.insert(req.body,function(err, doc) {
+		      res.json(doc);
+		  });
+	   });
 
-        // send to twitter to do the authentication
-        app.get('/connect/twitter', passport.authorize('twitter', { scope : 'email' }));
+        app.delete('/contactlist/:id', function (req, res) {
+	       var id = req.params.id;
+	       console.log(id);
+	       db.contactlist.remove({_id: mongojs.ObjectId(id)}, function (err, doc) {
+		      res.json(doc);
+		  });
+	   });
 
-        // handle the callback after twitter has authorized the user
-        app.get('/connect/twitter/callback',
-            passport.authorize('twitter', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
+        app.get('/contactlist/:id', function (req, res) {
+	       var id = req.params.id;
+	       console.log(id);
+	        db.contactlist.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
+		       res.json(doc);
+		  });
+	   });
 
+        app.put('/contactlist/:id', function (req, res) {
+	       var id = req.params.id;
+	       console.log(req.body.round1a);
+	       db.contactlist.findAndModify({query: {_id: mongojs.ObjectId(id)},
+			 update: {$set: {round1a: req.body.round1a, round1b: req.body.round1b, round1c: req.body.round1c, round1d: req.body.round1d, round2a: req.body.round2a, round2b: req.body.round2b, winner: req.body.winner}},
+			 new: true}, function (err, doc) {
+		      res.json(doc);
+		  });
+	   });
 
-    // google ---------------------------------
-
-        // send to google to do the authentication
-        app.get('/connect/google', passport.authorize('google', { scope : ['profile', 'email'] }));
-
-        // the callback after google has authorized the user
-        app.get('/connect/google/callback',
-            passport.authorize('google', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
-
-// =============================================================================
-// UNLINK ACCOUNTS =============================================================
-// =============================================================================
-// used to unlink accounts. for social accounts, just remove the token
-// for local account, remove email and password
-// user account will stay active in case they want to reconnect in the future
-
-    // local -----------------------------------
-    app.get('/unlink/local', isLoggedIn, function(req, res) {
-        var user            = req.user;
-        user.local.email    = undefined;
-        user.local.password = undefined;
-        user.save(function(err) {
-            res.redirect('/profile');
-        });
-    });
-
-    // facebook -------------------------------
-    app.get('/unlink/facebook', isLoggedIn, function(req, res) {
-        var user            = req.user;
-        user.facebook.token = undefined;
-        user.save(function(err) {
-            res.redirect('/profile');
-        });
-    });
-
-    // twitter --------------------------------
-    app.get('/unlink/twitter', isLoggedIn, function(req, res) {
-        var user           = req.user;
-        user.twitter.token = undefined;
-        user.save(function(err) {
-            res.redirect('/profile');
-        });
-    });
-
-    // google ---------------------------------
-    app.get('/unlink/google', isLoggedIn, function(req, res) {
-        var user          = req.user;
-        user.google.token = undefined;
-        user.save(function(err) {
-            res.redirect('/profile');
-        });
-    });
-
-
+        app.put('/view/:id', function (req, res) {
+	        console.log("recieved view request");
+	       var id = req.params.id;
+	       console.log(id);
+	       db.contactlist.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
+		      res.json(doc);
+		  });
+	   });
 };
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
-
     res.redirect('/');
 }

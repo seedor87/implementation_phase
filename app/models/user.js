@@ -3,31 +3,25 @@ var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
+var bracketSchema =  new mongoose.Schema({
+        round1a      : String,
+        round1b      : String,
+        round1c      : String,
+        round1d      : String,
+        round2a      : String,
+        round2b      : String,
+        round3a      : String,
+});
+
+// define the schema for our user model
 var userSchema = mongoose.Schema({
 
     local            : {
         email        : String,
-        password     : String
+        password     : String,
+        brackets     : [bracketSchema]
+        //{type: mongoose.Schema.Types.ObjectId, ref: 'bracket'}
     },
-    facebook         : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
-    },
-    twitter          : {
-        id           : String,
-        token        : String,
-        displayName  : String,
-        username     : String
-    },
-    google           : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
-    }
-
 });
 
 // generating a hash

@@ -1,0 +1,34 @@
+var myApp = angular.module('myApp', []);
+
+myApp.controller('AppCtrl', ['$scope', '$http',
+
+        function($scope, $http) {
+
+        //console.log("Hello World from controller");                                                
+
+        var goTo = function() {
+                $http.get('/brackets').success(function (response) {
+                        console.log(angular.toJson(response));
+                });
+        };
+
+	var refresh = function() {
+            $http.get('/contactlist').success(function (response) {
+		    console.log("data recieved");
+		    $scope.contactList = response;
+		    $scope.contact = "";
+		    $scope.focus = angular.fromJson(window.localStorage['focus']);
+		    console.log($scope.focus);
+		});
+        };
+
+        var log_in = function() {
+            console.log("trying");
+            $http.get('/users').success(function (response) {
+		    console.log("Login Successful");
+		});
+        };
+
+        refresh();
+        log_in();
+}]);
