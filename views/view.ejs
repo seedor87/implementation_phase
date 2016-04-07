@@ -2,7 +2,9 @@
 <html ng-app="myApp">
 <head>
 
-<title>Bracket App</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -14,7 +16,105 @@
 
 <style type="text/css">
 
-      /* Sticky footer styles
+.tournament4-wrap, .tournament8-wrap, .tournament16-wrap, .tournament32-wrap {
+  text-align: center;
+  font-family: "Verdana";
+  font-size: 1.875em;
+}
+
+/****** round 1 ******/
+.round1-top, .round1-bottom {
+  float: left;
+  width: 150px;
+  height: 2em;
+}
+
+.round1-top {
+  line-height: 2.5em;
+}
+
+.round2-topwrap .round1-bottom {
+  width: 149px;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.round2-bottomwrap .round1-top {
+  width: 149px;
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+/****** round 2 ******/
+
+.round2-top, .round2-bottom {
+  float: right;
+  width: 150px;
+  height: 4em;
+}
+
+.round2-top {
+  line-height: 6.5em;
+}
+
+
+.round3-topwrap .round2-bottom {
+  width: 149px;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.round3-bottomwrap .round2-top {
+  width: 149px;
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.tournament4-wrap .round2-top {
+  border-bottom: 1px solid #000;
+}
+
+.round2-topwrap, .round2-bottomwrap {
+  float: left;
+  width: 300px;
+  height: 4em;
+}
+
+/****** round 3 ******/
+
+.round3-top, .round3-bottom {
+  float: right;
+  width: 150px;
+  height: 8em;
+}
+
+.round3-top {
+  line-height: 14.5em;
+}
+
+.round4-topwrap .round3-bottom {
+  width: 149px;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.round4-bottomwrap .round3-top {
+  width: 149px;
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.tournament8-wrap .round3-top {
+  border-bottom: 1px solid #000;
+}
+
+.round3-topwrap, .round3-bottomwrap, .tournament4-wrap {
+  float: left;
+  width: 450px;
+  height: 8em;
+}
+
+/* Sticky footer styles
       -------------------------------------------------- */
 
       html,
@@ -33,8 +133,7 @@
       }
 
       /* Set the fixed height of the footer here */
-      #push,
-      #footer {
+      #push, #footer {
         height: 60px;
       }
       #footer {
@@ -51,8 +150,6 @@
         }
       }
 
-
-
       /* Custom page CSS
       -------------------------------------------------- */
       /* Not required for template or sticky footer method. */
@@ -65,7 +162,9 @@
         margin: 20px 0;
       }
 
-    </style>
+</style>
+
+    
 </head>
 <body>
 
@@ -175,80 +274,48 @@
 
     <div class = "container" ng-controller = "myCtrl">
 
-        <h1><%= user.local.email %>'s Brackets</h1>
+    	<title>Bracket: {{focus.round1a}} {{focus.round1b}} {{focus.round1c}} {{focus.round1d}}</title>
 
-        <table class = "table">
-            <thead>
-                <tr>
-                    <th>Round 1 A</th>
-                    <th>Round 1 B</th>
-                    <th>Round 1 C</th>
-                    <th>Round 1 D</th>
-                    <th>Round 2 A</th>
-                    <th>Round 2 B</th>
-                    <th>Winner</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <td><input class = 'form-control' ng-model = "contact.round1a"><a class="clear" ng-click="contact.round1a = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round1b"><a class="clear" ng-click="contact.round1b = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round1c"><a class="clear" ng-click="contact.round1c = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round1d"><a class="clear" ng-click="contact.round1d = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round2a"><a class="clear" ng-click="contact.round2a = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round2b"><a class="clear" ng-click="contact.round2b = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                <td><input class = 'form-control' ng-model = "contact.winner"><a class="clear" ng-click="contact.winner = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><button class="btn btn-success" ng-click="addContact()">Add Selection</button>
-                 </td>
-                 <td><button class ="btn btn-info" ng-click="update()">Update</button>
-                 </td>
-                 <td><button class ="btn btn-primary" style="padding: 5px 10px;" ng-click = "deselect()">Clear</button>
-                 </td>
-                </tr>
-                <tr ng-repeat = "contact in contactList">
-                    <td>{{contact.round1a}}</td>
-                    <td>{{contact.round1b}}</td>
-                    <td>{{contact.round1c}}</td>
-                    <td>{{contact.round1d}}</td>
-                    <td>{{contact.round2a}}</td>
-                    <td>{{contact.round2b}}</td>
-                    <td>{{contact.winner}}</td>
-                    <td>
-                     <a href = '/view' class ="btn btn-info" ng-click="view(contact._id)">View</a>
-                    </td>
-                    <td><button class = "btn btn-danger" ng-click="remove(contact._id)">Remove</button>
-                    </td>
-                    <td><button class =  "btn btn-warning" ng-click = "edit(contact._id)">Edit</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    	
+<!-- Part 1: Wrap all page content here -->
+    <div id="wrap">
+
+      <!-- Begin page content -->
+      <div class="container">
+        <div class="page-header">
+          <h1>Bracket: {{focus._id}}</h1>
+
+    	<div class="tournament4-wrap">
+		<table class="text-justify">
+			<tr>
+				<div class="round2-topwrap">
+					<div class="round2-top">{{focus.round2a}}</div>
+					<div class="round1-top">{{focus.round1a}}</div>
+					<div class="round1-bottom">{{focus.round1b}}</div>
+				</div>
+			</tr>
+		
+			<tr>
+				<div class="round2-bottomwrap">
+					<div class="round2-bottom">{{focus.round2b}}</div>
+					<div class="round1-top">{{focus.round1c}}</div>
+					<div class="round1-bottom">{{focus.round1d}}</div>
+				</div>
+			</tr>
+		</table>
+		</div>
     </div>
 
-    <div id="push"></div>
-        </div>
-            <div id="footer">
-                <div class="container">
-                    <a href = '/profile' class ="btn btn-success">Home</a>
-                    <a href = '/logout' class ="btn btn-warning">Logout</a>
-                </div>
-            </div>
-        </div>
+      <div id="push"></div>
+    	</div>
+			<div id="footer">
+      			<div class="container">
+					<a href = '/profile' class ="btn btn-success">Back</a>
+					<button class =  "btn btn-info" ng-click = "home()">Home</button>
+					<a href = '/logout' class ="btn btn-warning">Logout</a>
+				</div>
+      		</div>
+  		</div>
 
 </body>
 

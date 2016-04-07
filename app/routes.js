@@ -26,6 +26,12 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/view', isLoggedIn, function(req, res) {
+        res.render('view.ejs', {
+            user : req.user
+        });
+    });
+
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();
@@ -135,14 +141,7 @@ module.exports = function(app, passport) {
 		  });
 	   });
 
-        app.put('/view/:id', function (req, res) {
-	        console.log("recieved view request");
-	       var id = req.params.id;
-	       console.log(id);
-	       db.contactlist.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
-		      res.json(doc);
-		  });
-	   });
+        
 };
 
 // route middleware to ensure user is logged in

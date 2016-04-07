@@ -1,0 +1,99 @@
+
+
+.tournament4-wrap, .tournament8-wrap, .tournament16-wrap, .tournament32-wrap {
+  text-align: center;
+  font-family: "Verdana";
+  font-size: 1.875em;
+}
+
+/****** round 1 ******/
+.round1-top, .round1-bottom {
+  float: left;
+  width: 150px;
+  height: 2em;
+}
+
+.round1-top {
+  line-height: 2.5em;
+}
+
+.round2-topwrap .round1-bottom {
+  width: 149px;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.round2-bottomwrap .round1-top {
+  width: 149px;
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+/****** round 2 ******/
+
+.round2-top, .round2-bottom {
+  float: right;
+  width: 150px;
+  height: 4em;
+}
+
+.round2-top {
+  line-height: 6.5em;
+}
+
+
+.round3-topwrap .round2-bottom {
+  width: 149px;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.round3-bottomwrap .round2-top {
+  width: 149px;
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.tournament4-wrap .round2-top {
+  border-bottom: 1px solid #000;
+}
+
+.round2-topwrap, .round2-bottomwrap {
+  float: left;
+  width: 300px;
+  height: 4em;
+}
+
+/****** round 3 ******/
+
+.round3-top, .round3-bottom {
+  float: right;
+  width: 150px;
+  height: 8em;
+}
+
+.round3-top {
+  line-height: 14.5em;
+}
+
+.round4-topwrap .round3-bottom {
+  width: 149px;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.round4-bottomwrap .round3-top {
+  width: 149px;
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.tournament8-wrap .round3-top {
+  border-bottom: 1px solid #000;
+}
+
+.round3-topwrap, .round3-bottomwrap, .tournament4-wrap {
+  float: left;
+  width: 450px;
+  height: 8em;
+}
