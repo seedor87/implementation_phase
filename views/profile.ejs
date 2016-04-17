@@ -1,70 +1,13 @@
 <!doctype>
-<html ng-app="myApp">
+<html ng-app = 'myApp'>
 <head>
-
-<title>Bracket App</title>
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-
-<style type="text/css">
-
-      /* Sticky footer styles
-      -------------------------------------------------- */
-
-      html,
-      body {
-        height: 100%;
-        /* The html and body elements cannot have any padding or margin. */
-      }
-
-      /* Wrapper for page content to push down footer */
-      #wrap {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        /* Negative indent footer by it's height */
-        margin: 0 auto -60px;
-      }
-
-      /* Set the fixed height of the footer here */
-      #push,
-      #footer {
-        height: 60px;
-      }
-      #footer {
-        background-color: #efeff5;
-      }
-
-      /* Lastly, apply responsive CSS fixes as necessary */
-      @media (max-width: 767px) {
-        #footer {
-          margin-left: -20px;
-          margin-right: -20px;
-          padding-left: 20px;
-          padding-right: 20px;
+    <title>Choose a bracket type</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body         { 
+            padding-top:80px; 
         }
-      }
-
-
-
-      /* Custom page CSS
-      -------------------------------------------------- */
-      /* Not required for template or sticky footer method. */
-
-      .container {
-        width: auto;
-        max-width: 680px;
-      }
-      .container .credit {
-        margin: 20px 0;
-      }
-
     </style>
 </head>
 <body>
@@ -169,87 +112,23 @@
             });
         };
     }
-
-])
 </script>
 
-    <div class = "container" ng-controller = "myCtrl">
+<div class="container" ng-controller = "myCtrl">
 
-        <h1><%= user.local.email %>'s Brackets</h1>
+    <div class="jumbotron text-center">
+        <h1><span class="glyphicon glyphicon-bishop"></span>Choose a Bracket type <span class="glyphicon glyphicon-knight"></span></h1>
 
-        <table class = "table">
-            <thead>
-                <tr>
-                    <th>Round 1 A</th>
-                    <th>Round 1 B</th>
-                    <th>Round 1 C</th>
-                    <th>Round 1 D</th>
-                    <th>Round 2 A</th>
-                    <th>Round 2 B</th>
-                    <th>Winner</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <td><input class = 'form-control' ng-model = "contact.round1a"><a class="clear" ng-click="contact.round1a = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round1b"><a class="clear" ng-click="contact.round1b = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round1c"><a class="clear" ng-click="contact.round1c = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round1d"><a class="clear" ng-click="contact.round1d = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round2a"><a class="clear" ng-click="contact.round2a = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><input class = 'form-control' ng-model = "contact.round2b"><a class="clear" ng-click="contact.round2b = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                <td><input class = 'form-control' ng-model = "contact.winner"><a class="clear" ng-click="contact.winner = ''">
-                <span class="glyphicon glyphicon-remove"></span>
-                </a></td>
-                 <td><button class="btn btn-success" ng-click="addContact()">Add Selection</button>
-                 </td>
-                 <td><button class ="btn btn-info" ng-click="update()">Update</button>
-                 </td>
-                 <td><button class ="btn btn-primary" style="padding: 5px 10px;" ng-click = "deselect()">Clear</button>
-                 </td>
-                </tr>
-                <tr ng-repeat = "contact in contactList">
-                    <td>{{contact.round1a}}</td>
-                    <td>{{contact.round1b}}</td>
-                    <td>{{contact.round1c}}</td>
-                    <td>{{contact.round1d}}</td>
-                    <td>{{contact.round2a}}</td>
-                    <td>{{contact.round2b}}</td>
-                    <td>{{contact.winner}}</td>
-                    <td>
-                     <a href = '/view' class ="btn btn-info" ng-click="view(contact._id)">View</a>
-                    </td>
-                    <td><button class = "btn btn-danger" ng-click="remove(contact._id)">Remove</button>
-                    </td>
-                    <td><button class =  "btn btn-warning" ng-click = "edit(contact._id)">Edit</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <a href="/brackets" class="btn btn-info"><span class="glyphicon glyphicon-tag"></span>  Brackets 2 x 2</a>
+        <a href="/brackets2" class="btn btn-info"><span class="glyphicon glyphicon-tags"></span>  Brackets 4 x 4</a>
+        
     </div>
 
-    <div id="push"></div>
-        </div>
-            <div id="footer">
-                <div class="container">
-                    <a href = '/profile' class ="btn btn-success">Home</a>
-                    <a href = '/logout' class ="btn btn-warning">Logout</a>
-                </div>
-            </div>
-        </div>
+    <div class="text-center">
+    <a href = '/logout' class ="btn btn-warning"><span class="glyphicon glyphicon-hand-right"></span>  Logout</a>
+        <p>By Bob S., Kevin M., Bryan M., and Dontai O.</p>
+    </div>
 
+</div>
 </body>
-
 </html>

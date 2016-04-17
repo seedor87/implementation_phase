@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var mongojs = require('mongojs');
+var db2 = mongojs('brackets', ['brackets']);
 var db = mongojs('contactlist', ['contactlist']);
 var bodyParser = require('body-parser');
 var router = express.Router();
@@ -39,7 +40,13 @@ module.exports = function(app, passport) {
     });
 
     app.get('/brackets', isLoggedIn, function(req, res) {
-        res.ender('brackets.ejs', {
+        res.render('brackets.ejs', {
+            user : req.user
+        });
+    });
+
+    app.get('/brackets2', isLoggedIn, function(req, res) {
+        res.render('brackets2.ejs', {
             user : req.user
         });
     });
@@ -108,12 +115,28 @@ module.exports = function(app, passport) {
 		  });
 	   });
 
+        app.get("/brackets2", function (req, res) {
+            console.log('recieved get request');
+        
+           db2.brackets.find(function (err, docs) {
+              console.log(docs);
+              res.json(docs);
+          });
+       });
+
         app.post("/contactlist", function (req, res) {
 	       console.log(req.body);
 	       db.contactlist.insert(req.body,function(err, doc) {
 		      res.json(doc);
 		  });
 	   });
+
+        app.post("/brackets2", function (req, res) {
+           console.log(req.body);
+           db2.brackets.insert(req.body,function(err, doc) {
+              res.json(doc);
+          });
+       });
 
         app.delete('/contactlist/:id', function (req, res) {
 	       var id = req.params.id;
@@ -123,6 +146,14 @@ module.exports = function(app, passport) {
 		  });
 	   });
 
+        app.delete('/brackets2/:id', function (req, res) {
+           var id = req.params.id;
+           console.log(id);
+           db2.brackets.remove({_id: mongojs.ObjectId(id)}, function (err, doc) {
+              res.json(doc);
+          });
+       });
+
         app.get('/contactlist/:id', function (req, res) {
 	       var id = req.params.id;
 	       console.log(id);
@@ -130,6 +161,14 @@ module.exports = function(app, passport) {
 		       res.json(doc);
 		  });
 	   });
+
+        app.get('/brackets2/:id', function (req, res) {
+           var id = req.params.id;
+           console.log(id);
+            db2.brackets.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
+               res.json(doc);
+          });
+       });
 
         app.put('/contactlist/:id', function (req, res) {
 	       var id = req.params.id;
@@ -140,6 +179,16 @@ module.exports = function(app, passport) {
 		      res.json(doc);
 		  });
 	   });
+
+        app.put('/brackets2/:id', function (req, res) {
+           var id = req.params.id;
+           console.log(req.body.round1a);
+           db2.brackets.findAndModify({query: {_id: mongojs.ObjectId(id)},
+             update: {$set: {round1a: req.body.round1a, round1b: req.body.round1b, round1c: req.body.round1c, round1d: req.body.round1d, round2a: req.body.round2a, round2b: req.body.round2b, winner: req.body.winner}},
+             new: true}, function (err, doc) {
+              res.json(doc);
+          });
+       });
 
         
 };

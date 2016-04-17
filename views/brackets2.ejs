@@ -17,15 +17,16 @@ body {
     height: 100%; 
      width: 100%;
     position: absolute;
-    left: -50px;
+    left: -80px;
     right: -50px;
     top: 0px;
     margin: 0px;
     padding-right: 0px;
 }
 
-table, td {
+td {
     white-space: nowrap;
+    width: 15px;
 }
 
 /* Wrapper for page content to push down footer */
@@ -79,9 +80,9 @@ table, td {
     function($scope, $http) {
 
         var refresh = function() {
-            $http.get('/contactlist').success(function (response) {
+            $http.get('/brackets2').success(function (response) {
                 console.log("data recieved");
-                $scope.contactList = response;
+                $scope.brackets = response;
                 $scope.contact = "";
                 $scope.focus = angular.fromJson(window.localStorage['focus']);
                 console.log($scope.focus);
@@ -101,7 +102,7 @@ table, td {
 
         $scope.addContact = function() {
             console.log($scope.contact);
-            $http.post('/contactlist', $scope.contact).success(function (response) {
+            $http.post('/brackets2', $scope.contact).success(function (response) {
                 console.log(response);
                 refresh();
             });
@@ -109,21 +110,21 @@ table, td {
 
         $scope.remove = function(id) {
             console.log(id);
-            $http.delete('/contactlist/' + id).success(function (response) {
+            $http.delete('/brackets2/' + id).success(function (response) {
                 refresh();
             });
         };
 
         $scope.edit = function(id) {
             console.log(id);
-            $http.get('/contactlist/' + id).success(function (response) {
+            $http.get('/brackets2/' + id).success(function (response) {
                 $scope.contact = response;
             });
         };
 
         $scope.update = function() {
             console.log($scope.contact._id);
-            $http.put('/contactlist/' + $scope.contact._id, $scope.contact).success(function(response) {
+            $http.put('/brackets2/' + $scope.contact._id, $scope.contact).success(function(response) {
                 refresh();
             });
             
@@ -177,7 +178,7 @@ table, td {
 
     <div class = "container" ng-controller = "myCtrl">
 
-        <h1><%= user.local.email %>'s Brackets</h1>
+        <h1><%= user.local.email %>'s 4x4 Brackets</h1>
 
         <table class = "table">
             <thead>
@@ -186,8 +187,16 @@ table, td {
                     <th>Round 1 B</th>
                     <th>Round 1 C</th>
                     <th>Round 1 D</th>
+                    <th>Round 1 E</th>
+                    <th>Round 1 F</th>
+                    <th>Round 1 G</th>
+                    <th>Round 1 H</th>
                     <th>Round 2 A</th>
                     <th>Round 2 B</th>
+                    <th>Round 2 C</th>
+                    <th>Round 2 D</th>
+                    <th>Round 3 A</th>
+                    <th>Round 3 B</th>
                     <th>Winner</th>
                     <th>Action</th>
                 </tr>
@@ -206,10 +215,34 @@ table, td {
                  <td><input class = 'form-control' ng-model = "contact.round1d"><a class="clear" ng-click="contact.round1d = ''">
                 <span class="glyphicon glyphicon-remove"></span>
                 </a></td>
+                <td><input class = 'form-control' ng-model = "contact.round1e"><a class="clear" ng-click="contact.round1e = ''">
+                <span class="glyphicon glyphicon-remove"></span>
+                </a></td>
+                <td><input class = 'form-control' ng-model = "contact.round1f"><a class="clear" ng-click="contact.round1f = ''">
+                <span class="glyphicon glyphicon-remove"></span>
+                </a></td>
+                <td><input class = 'form-control' ng-model = "contact.round1g"><a class="clear" ng-click="contact.round1g = ''">
+                <span class="glyphicon glyphicon-remove"></span>
+                </a></td>
+                <td><input class = 'form-control' ng-model = "contact.round1h"><a class="clear" ng-click="contact.round1h = ''">
+                <span class="glyphicon glyphicon-remove"></span>
+                </a></td>
                  <td><input class = 'form-control' ng-model = "contact.round2a"><a class="clear" ng-click="contact.round2a = ''">
                 <span class="glyphicon glyphicon-remove"></span>
                 </a></td>
                  <td><input class = 'form-control' ng-model = "contact.round2b"><a class="clear" ng-click="contact.round2b = ''">
+                <span class="glyphicon glyphicon-remove"></span>
+                </a></td>
+                <td><input class = 'form-control' ng-model = "contact.round2c"><a class="clear" ng-click="contact.round2c = ''">
+                <span class="glyphicon glyphicon-remove"></span>
+                </a></td>
+                <td><input class = 'form-control' ng-model = "contact.round2d"><a class="clear" ng-click="contact.round2d = ''">
+                <span class="glyphicon glyphicon-remove"></span>
+                </a></td>
+                <td><input class = 'form-control' ng-model = "contact.round3a"><a class="clear" ng-click="contact.round3a = ''">
+                <span class="glyphicon glyphicon-remove"></span>
+                </a></td>
+                <td><input class = 'form-control' ng-model = "contact.round3b"><a class="clear" ng-click="contact.round3b = ''">
                 <span class="glyphicon glyphicon-remove"></span>
                 </a></td>
                 <td><input class = 'form-control' ng-model = "contact.winner"><a class="clear" ng-click="contact.winner = ''">
@@ -222,13 +255,21 @@ table, td {
                  <td><button class ="btn btn-primary" style="padding: 5px 10px;" ng-click = "deselect()">Clear</button>
                  </td>
                 </tr>
-                <tr ng-repeat = "contact in contactList">
+                <tr ng-repeat = "contact in brackets">
                     <td>{{contact.round1a}}</td>
                     <td>{{contact.round1b}}</td>
                     <td>{{contact.round1c}}</td>
                     <td>{{contact.round1d}}</td>
+                    <td>{{contact.round1e}}</td>
+                    <td>{{contact.round1f}}</td>
+                    <td>{{contact.round1g}}</td>
+                    <td>{{contact.round1h}}</td>
                     <td>{{contact.round2a}}</td>
                     <td>{{contact.round2b}}</td>
+                    <td>{{contact.round2c}}</td>
+                    <td>{{contact.round2d}}</td>
+                    <td>{{contact.round3a}}</td>
+                    <td>{{contact.round3b}}</td>
                     <td>{{contact.winner}}</td>
                     <td>
                      <a href = '/view' class ="btn btn-info" ng-click="view(contact._id)">View</a>

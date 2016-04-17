@@ -6,11 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 
 <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
 
@@ -35,14 +31,14 @@
 
 .round2-topwrap .round1-bottom {
   width: 149px;
-  border-top: 1px solid #000;
-  border-right: 1px solid #000;
+  border-top: 2px solid #000;
+  border-right: 2px solid #000;
 }
 
 .round2-bottomwrap .round1-top {
   width: 149px;
-  border-bottom: 1px solid #000;
-  border-right: 1px solid #000;
+  border-bottom: 2px solid #000;
+  border-right: 2px solid #000;
 }
 
 /****** round 2 ******/
@@ -60,18 +56,18 @@
 
 .round3-topwrap .round2-bottom {
   width: 149px;
-  border-top: 1px solid #000;
-  border-right: 1px solid #000;
+  border-top: 2px solid #000;
+  border-right: 2px solid #000;
 }
 
 .round3-bottomwrap .round2-top {
   width: 149px;
-  border-bottom: 1px solid #000;
-  border-right: 1px solid #000;
+  border-bottom: 2px solid #000;
+  border-right: 2px solid #000;
 }
 
 .tournament4-wrap .round2-top {
-  border-bottom: 1px solid #000;
+  border-bottom: 2px solid #000;
 }
 
 .round2-topwrap, .round2-bottomwrap {
@@ -94,18 +90,18 @@
 
 .round4-topwrap .round3-bottom {
   width: 149px;
-  border-top: 1px solid #000;
-  border-right: 1px solid #000;
+  border-top: 2px solid #000;
+  border-right: 2px solid #000;
 }
 
 .round4-bottomwrap .round3-top {
   width: 149px;
-  border-bottom: 1px solid #000;
-  border-right: 1px solid #000;
+  border-bottom: 2px solid #000;
+  border-right: 2px solid #000;
 }
 
 .tournament8-wrap .round3-top {
-  border-bottom: 1px solid #000;
+  border-bottom: 2px solid #000;
 }
 
 .round3-topwrap, .round3-bottomwrap, .tournament4-wrap {
@@ -114,57 +110,81 @@
   height: 8em;
 }
 
-/* Sticky footer styles
-      -------------------------------------------------- */
+/****** styles for the winner column ******/
+.winner3, .winner4, .winner5, .winner6 {
+	font-weight: bold;
+	font-style: italic;
+}
 
-      html,
-      body {
-        height: 100%;
-        /* The html and body elements cannot have any padding or margin. */
-      }
+.winner3 {
+	line-height: 8em;
+}
 
-      /* Wrapper for page content to push down footer */
-      #wrap {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        /* Negative indent footer by it's height */
-        margin: 0 auto -60px;
-      }
+.winner4 {
+	line-height: 16em;
+}
 
-      /* Set the fixed height of the footer here */
-      #push, #footer {
-        height: 60px;
-      }
-      #footer {
-        background-color: #efeff5;
-      }
+/* Sticky footer styles -------------------------------------------------- */
 
-      /* Lastly, apply responsive CSS fixes as necessary */
-      @media (max-width: 767px) {
-        #footer {
-          margin-left: -20px;
-          margin-right: -20px;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-      }
+html,
+body {
+    height: 100%; 
+     width: 100%;
+    position: relative;
+    left: -50px;
+    right: 0px;
+    top: 0px;
+    margin: 0px;
+    padding-right: 0px;
+}
 
-      /* Custom page CSS
-      -------------------------------------------------- */
-      /* Not required for template or sticky footer method. */
+/* Wrapper for page content to push down footer */
+#wrap {
+	position: relative;
+    left: 50px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%; /* Negative indent footer by it's height */
+	margin: 0 auto -60px;
+}
 
-      .container {
-        width: auto;
-        max-width: 680px;
-      }
-      .container .credit {
-        margin: 20px 0;
-      }
+/* Set the fixed height of the footer here */
+#push, #footer {
+	height: 60px;
+}
+#footer {
+	background-color: #f0f5f5;
+}
+
+#vertcent {
+	position: center;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 900px) {
+	#footer {
+		margin-left: -20px;
+		margin-right: -20px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.container {
+	width: auto;
+	max-width: 1000px;
+}
+.container .credit {
+	position: center;
+	margin: 20px 0;
+}
 
 </style>
-
-    
+ 
 </head>
 <body>
 
@@ -288,13 +308,13 @@
     	<div class="tournament4-wrap">
 		<table class="text-justify">
 			<tr>
+			<div class="round3-top winner3">{{focus.winner}}</div>
 				<div class="round2-topwrap">
 					<div class="round2-top">{{focus.round2a}}</div>
 					<div class="round1-top">{{focus.round1a}}</div>
 					<div class="round1-bottom">{{focus.round1b}}</div>
 				</div>
 			</tr>
-		
 			<tr>
 				<div class="round2-bottomwrap">
 					<div class="round2-bottom">{{focus.round2b}}</div>
@@ -310,8 +330,8 @@
     	</div>
 			<div id="footer">
       			<div class="container">
-					<a href = '/profile' class ="btn btn-success">Back</a>
-					<button class =  "btn btn-info" ng-click = "home()">Home</button>
+					<a href = '/brackets' class ="btn btn-success">Back</a>
+					<a href = '/profile' class = 'btn btn-info'>Navigate</a>
 					<a href = '/logout' class ="btn btn-warning">Logout</a>
 				</div>
       		</div>
