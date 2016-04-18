@@ -33,6 +33,12 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/view2', isLoggedIn, function(req, res) {
+        res.render('view2.ejs', {
+            user : req.user
+        });
+    });
+
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();

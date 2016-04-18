@@ -137,7 +137,7 @@ td {
         $scope.view = function(id) {
             console.log("view called on" + id);
             //$scope.prop2 = "Second";
-            $http.get('/view/' + id).success(function (response) {
+            $http.get('/view2/' + id).success(function (response) {
                 console.log(angular.toJson(response));
                 console.log(focus);
                 window.localStorage['focus'] = angular.toJson(response);
