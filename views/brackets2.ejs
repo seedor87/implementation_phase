@@ -80,11 +80,11 @@ td {
     function($scope, $http) {
 
         var refresh = function() {
-            $http.get('/brackets2').success(function (response) {
+            $http.get('/bracketsSilly').success(function (response) {
                 console.log("data recieved");
                 $scope.brackets = response;
                 $scope.contact = "";
-                $scope.focus = angular.fromJson(window.localStorage['focus']);
+                $scope.focus = angular.fromJson(window.localStorage['focus2']);
                 console.log($scope.focus);
             });
         };
@@ -140,7 +140,7 @@ td {
             $http.get('/view2/' + id).success(function (response) {
                 console.log(angular.toJson(response));
                 console.log(focus);
-                window.localStorage['focus'] = angular.toJson(response);
+                window.localStorage['focus2'] = angular.toJson(response);
                 //window.location.href = '/views/view.html';
             });
         };
@@ -272,7 +272,7 @@ td {
                     <td>{{contact.round3b}}</td>
                     <td>{{contact.winner}}</td>
                     <td>
-                     <a href = '/view' class ="btn btn-info" ng-click="view(contact._id)">View</a>
+                     <a href = '/view2' class ="btn btn-info" ng-click="view(contact._id)">View</a>
                     </td>
                     <td><button class = "btn btn-danger" ng-click="remove(contact._id)">Remove</button>
                     </td>

@@ -121,7 +121,7 @@ module.exports = function(app, passport) {
 		  });
 	   });
 
-        app.get("/brackets2", function (req, res) {
+        app.get("/bracketsSilly", function (req, res) {
             console.log('recieved get request');
         
            db2.brackets.find(function (err, docs) {
@@ -176,6 +176,14 @@ module.exports = function(app, passport) {
           });
        });
 
+        app.get('/view2/:id', function (req, res) {
+           var id = req.params.id;
+           console.log(id);
+            db2.brackets.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
+               res.json(doc);
+          });
+       });
+
         app.put('/contactlist/:id', function (req, res) {
 	       var id = req.params.id;
 	       console.log(req.body.round1a);
@@ -186,11 +194,11 @@ module.exports = function(app, passport) {
 		  });
 	   });
 
-        app.put('/brackets2/:id', function (req, res) {
+        app.put('brackets2/:id', function (req, res) { 
            var id = req.params.id;
            console.log(req.body.round1a);
            db2.brackets.findAndModify({query: {_id: mongojs.ObjectId(id)},
-             update: {$set: {round1a: req.body.round1a, round1b: req.body.round1b, round1c: req.body.round1c, round1d: req.body.round1d, round2a: req.body.round2a, round2b: req.body.round2b, winner: req.body.winner}},
+             update: {$set: {round1a: req.body.round1a, round1b: req.body.round1b, round1c: req.body.round1c, round1d: req.body.round1d, round1e: req.body.round1e, round1f: req.body.round1f, round1g: req.body.round1g, round1h: req.body.round1h, round2a: req.body.round2a, round2b: req.body.round2b, round2c: req.body.round2c, round2d: req.body.round2d, round3a: req.body.round3a, round3b: req.body.round3b, winner: req.body.winner}},
              new: true}, function (err, doc) {
               res.json(doc);
           });

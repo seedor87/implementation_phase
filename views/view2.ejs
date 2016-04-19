@@ -196,11 +196,11 @@ body {
     function($scope, $http) {
 
         var refresh = function() {
-            $http.get('/contactlist').success(function (response) {
+            $http.get('/bracketsSilly').success(function (response) {
                 console.log("data recieved");
                 $scope.contactList = response;
                 $scope.contact = "";
-                $scope.focus = angular.fromJson(window.localStorage['focus']);
+                $scope.focus = angular.fromJson(window.localStorage['focus2']);
                 console.log($scope.focus);
             });
         };
@@ -253,10 +253,10 @@ body {
         $scope.view = function(id) {
             console.log("view called on" + id);
             //$scope.prop2 = "Second";
-            $http.get('/view/' + id).success(function (response) {
+            $http.get('/view2/' + id).success(function (response) {
                 console.log(angular.toJson(response));
                 console.log(focus);
-                window.localStorage['focus'] = angular.toJson(response);
+                window.localStorage['focus2'] = angular.toJson(response);
                 //window.location.href = '/views/view.html';
             });
         };
@@ -348,9 +348,9 @@ body {
       </div>
       <div id="footer">
             <div class="container">
-          <a href = '/brackets' class ="btn btn-success">Back</a>
+          <a href = '/brackets2' class ="btn btn-success">Back</a>
           <a href = '/profile' class = 'btn btn-info'>Navigate</a>
-          <a href = '/logout' class ="btn btn-warning">Logout</a>
+          <a href = '/logout' class ="btn btn-warning"><span class="glyphicon glyphicon-hand-right"></span> Logout</a>
         </div>
           </div>
       </div>
