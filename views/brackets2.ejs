@@ -89,16 +89,7 @@ td {
             });
         };
 
-        //DEPRICATED
-        var log_in = function() {
-            //console.log("trying");
-            //$http.get('/users').success(function (response) {
-             //   console.log("Login Successful");
-            //});
-        };
-
         refresh();
-        log_in();
 
         $scope.addContact = function() {
             console.log($scope.contact);
@@ -116,7 +107,6 @@ td {
         };
 
         $scope.edit = function(id) {
-            console.log(id);
             $http.get('/brackets2/' + id).success(function (response) {
                 $scope.contact = response;
             });
@@ -136,12 +126,10 @@ td {
 
         $scope.view = function(id) {
             console.log("view called on" + id);
-            //$scope.prop2 = "Second";
             $http.get('/view2/' + id).success(function (response) {
                 console.log(angular.toJson(response));
                 console.log(focus);
                 window.localStorage['focus2'] = angular.toJson(response);
-                //window.location.href = '/views/view.html';
             });
         };
 
@@ -162,7 +150,6 @@ td {
 
         $scope.login = function() {
             console.log("login successful");
-            //window.location.href = '/profile.ejs'
         };
 
         $scope.logout = function() {
